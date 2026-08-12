@@ -7,7 +7,7 @@
 <meta name="description" content="AI automation specialist. Herramientas de IA y automatización aplicadas a localización, facturación y análisis de datos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     /* Surfaces — one family, cooled toward blue */
@@ -38,7 +38,7 @@
     --accent-ink: #07080f;
     --live:       #4CD4C0;
 
-    --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+    --font-display: 'Outfit', system-ui, sans-serif;
     --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
@@ -180,6 +180,170 @@
     pointer-events: none;
   }
   .hero-inner { position: relative; z-index: 1; }
+  .hero-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  /* ─── HERO WORKFLOW ─── */
+  .hero-viz {
+    display: flex; justify-content: center;
+    perspective: 1000px;
+  }
+  .viz {
+    width: 100%; max-width: 520px; height: auto; overflow: visible;
+    transition: transform 0.45s var(--ease);
+    transform-style: preserve-3d;
+  }
+  .layer { transition: transform 0.45s var(--ease); }
+
+  /* rails + flowing dashes */
+  .viz-rails path { fill: none; stroke: rgba(255,255,255,0.10); stroke-width: 1.5; }
+  .viz-flow .f {
+    fill: none;
+    stroke: url(#vizGrad);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-dasharray: 14 86;
+    animation: vizFlow 4.2s linear infinite;
+  }
+  .viz-flow .s1 { animation-delay: 0s; }
+  .viz-flow .s2 { animation-delay: 1.4s; }
+  .viz-flow .s3 { animation-delay: 2.8s; }
+  @keyframes vizFlow { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+  /* travelling packets */
+  .pkt {
+    fill: url(#vizCore);
+    filter: url(#vizGlow);
+    animation: pktFade 4.2s linear infinite;
+  }
+  @keyframes pktFade {
+    0%, 2% { opacity: 0; }
+    6%     { opacity: 1; }
+    26%    { opacity: 1; }
+    31%,100% { opacity: 0; }
+  }
+  .pkt.s2 { animation-delay: 1.4s; }
+  .pkt.s3 { animation-delay: 2.8s; }
+
+  /* intake queue */
+  .viz-queue .q { fill: rgba(138,180,248,0.55); animation: qFeed 4.2s ease-in infinite; }
+  .viz-queue .q2 { animation-delay: -0.45s; }
+  .viz-queue .q3 { animation-delay: -0.9s; }
+  @keyframes qFeed {
+    0%       { transform: translateX(-16px); opacity: 0; }
+    18%      { opacity: 0.9; }
+    36%,100% { transform: translateX(52px); opacity: 0; }
+  }
+
+  /* node shells */
+  .viz-node .body { fill: #141720; stroke: rgba(255,255,255,0.14); stroke-width: 1.2; }
+  .viz-node .core { fill: url(#vizCore); }
+  .viz-node .halo {
+    fill: url(#vizGrad); opacity: 0;
+    filter: url(#vizGlow);
+    animation: vizPulse 4.2s ease-out infinite;
+  }
+  .viz-node.n0 .halo    { animation-delay: 0s; }
+  .viz-node.n1 .halo    { animation-delay: 1.25s; }
+  .viz-node.n1.d1 .halo { animation-delay: 1.35s; }
+  .viz-node.n1.d2 .halo { animation-delay: 1.45s; }
+  .viz-node.n2 .halo    { animation-delay: 2.65s; }
+  .viz-node.n3 .halo    { animation-delay: 3.95s; }
+  .viz-node.n3.d1 .halo { animation-delay: 4.05s; }
+  @keyframes vizPulse { 0% { opacity: 0; } 6% { opacity: 0.5; } 28% { opacity: 0; } 100% { opacity: 0; } }
+
+  /* trigger ripples */
+  .viz-node .ripple {
+    fill: none; stroke: rgba(138,180,248,0.5); stroke-width: 1.2;
+    transform-origin: 40px 200px;
+    animation: ripple 4.2s ease-out infinite;
+  }
+  .viz-node .ripple.r2 { animation-delay: 0.45s; }
+  @keyframes ripple {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    45%  { transform: scale(2.5); opacity: 0; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  /* glyphs */
+  .glyph rect, .glyph circle { fill: url(#vizGradV); }
+  .bars rect {
+    transform-origin: center 70px;
+    animation: bars 1.15s ease-in-out infinite alternate;
+  }
+  .bars rect:nth-child(2) { animation-delay: -0.28s; }
+  .bars rect:nth-child(3) { animation-delay: -0.56s; }
+  .bars rect:nth-child(4) { animation-delay: -0.84s; }
+  @keyframes bars { from { transform: scaleY(0.35); } to { transform: scaleY(1); } }
+
+  .dots circle { opacity: 0.22; animation: dotOn 2.6s steps(1) infinite; }
+  .dots circle:nth-child(1) { animation-delay: 0s; }
+  .dots circle:nth-child(2) { animation-delay: 0.29s; }
+  .dots circle:nth-child(3) { animation-delay: 0.58s; }
+  .dots circle:nth-child(4) { animation-delay: 0.87s; }
+  .dots circle:nth-child(5) { animation-delay: 1.16s; }
+  .dots circle:nth-child(6) { animation-delay: 1.45s; }
+  .dots circle:nth-child(7) { animation-delay: 1.74s; }
+  .dots circle:nth-child(8) { animation-delay: 2.03s; }
+  .dots circle:nth-child(9) { animation-delay: 2.32s; }
+  @keyframes dotOn { 0% { opacity: 1; } 12%, 100% { opacity: 0.22; } }
+
+  .lines rect { transform-origin: 164px center; animation: lineScan 2.4s ease-in-out infinite; }
+  .lines rect:nth-child(2) { animation-delay: 0.25s; }
+  .lines rect:nth-child(3) { animation-delay: 0.5s; }
+  @keyframes lineScan {
+    0%, 100% { transform: scaleX(0.4); opacity: 0.45; }
+    40%      { transform: scaleX(1);   opacity: 1; }
+  }
+
+  .fill .track { fill: rgba(255,255,255,0.12); }
+  .fill .bar { transform-origin: 408px center; animation: barFill 4.2s ease-out infinite; }
+  .fill .bar.b2 { animation-delay: 0.25s; }
+  @keyframes barFill {
+    0%, 90%  { transform: scaleX(0); }
+    97%      { transform: scaleX(1); }
+    100%     { transform: scaleX(1); }
+  }
+
+  .tick {
+    fill: none; stroke: url(#vizGrad); stroke-width: 3;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 100; stroke-dashoffset: 100;
+    animation: tickDraw 4.2s ease-out infinite;
+  }
+  @keyframes tickDraw {
+    0%, 92%  { stroke-dashoffset: 100; }
+    99%,100% { stroke-dashoffset: 0; }
+  }
+
+  /* hub */
+  .viz-node .ring {
+    fill: none; stroke: rgba(255,255,255,0.13); stroke-width: 1;
+    stroke-dasharray: 4 9;
+    transform-origin: 298px 200px;
+    animation: vizSpin 24s linear infinite;
+  }
+  .viz-node .ring.inner {
+    stroke: rgba(155,114,203,0.3); stroke-dasharray: 2 7;
+    animation: vizSpin 16s linear infinite reverse;
+  }
+  .orbit { transform-origin: 298px 200px; animation: vizSpin 7s linear infinite; }
+  .orb { fill: #8AB4F8; filter: url(#vizSoft); }
+  .core-ring {
+    fill: none; stroke: url(#vizGrad); stroke-width: 1.4;
+    transform-origin: 298px 200px;
+    animation: coreBeat 4.2s ease-out infinite;
+  }
+  @keyframes coreBeat {
+    0%, 60% { transform: scale(0.7); opacity: 0; }
+    68%     { transform: scale(1);   opacity: 0.9; }
+    88%,100%{ transform: scale(1.5); opacity: 0; }
+  }
+  @keyframes vizSpin { to { transform: rotate(360deg); } }
 
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 10px;
@@ -256,24 +420,53 @@
   .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
 
   .hero-stats {
-    display: flex; flex-wrap: wrap;
-    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding-top: 28px;
+    margin-top: 28px;
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, rgba(27,161,227,0.35), rgba(155,114,203,0.3), rgba(217,101,112,0.25)) 1;
   }
   .stat {
-    padding: 22px 40px 0 0;
-    margin-right: 40px;
-    border-right: 1px solid var(--line);
-    min-width: 150px;
+    position: relative;
+    padding: 18px 18px 16px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), background 0.25s var(--ease);
   }
-  .stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .stat::before {
+    content: '';
+    position: absolute; top: -1px; left: 16px; right: 16px;
+    height: 2px; border-radius: 2px;
+    background: var(--gradient);
+    opacity: 0;
+    transition: opacity 0.25s var(--ease);
+  }
+  .stat:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+  }
+  .stat:hover::before { opacity: 1; }
+  .stat-icon {
+    width: 20px; height: 20px;
+    margin-bottom: 12px;
+    stroke: url(#vizGrad);
+    display: block;
+  }
+  .stat-icon rect, .stat-icon circle { fill: url(#vizGrad); stroke: none; opacity: 0.9; }
+  .stat-icon path { stroke: url(#vizGrad); stroke-width: 1.6; fill: none; opacity: 0.9; }
   .stat-num {
     font-family: var(--font-display);
-    font-size: 30px; font-weight: 700;
-    letter-spacing: -0.02em;
-    display: block; line-height: 1.15;
-    margin-bottom: 4px;
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.01em;
+    display: block; line-height: 1.2;
+    margin-bottom: 3px;
   }
-  .stat-num-word { font-size: 25px; }
+  .stat-num-word { font-size: 22px; }
   .stat-label {
     font-family: var(--font-mono);
     font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
@@ -681,6 +874,10 @@
   ::-webkit-scrollbar-thumb:hover { background: #343a43; }
 
   /* ─── RESPONSIVE ─── */
+  @media (max-width: 1000px) {
+    .hero-top { grid-template-columns: 1fr; gap: 48px; }
+    .viz { max-width: 420px; }
+  }
   @media (max-width: 900px) {
     .about-grid { grid-template-columns: 1fr; gap: 44px; }
   }
@@ -690,12 +887,10 @@
     .nav-links a { font-size: 13px; }
     .hero { padding: 76px 0 64px; }
     .hero-title { max-width: none; }
+    .hero-viz { display: none; }
     .hero-ctas { margin-bottom: 48px; }
-    .stat {
-      padding: 18px 0 0; margin-right: 0;
-      border-right: none;
-      flex: 1 1 45%; min-width: 0;
-    }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat:last-child { grid-column: 1 / -1; }
     #projects, #about { padding: 68px 0; }
     #contact { padding: 76px 0; }
     .projects-grid { grid-template-columns: 1fr; }
@@ -732,6 +927,8 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
+    <div class="hero-top">
+    <div class="hero-copy">
     <div class="hero-eyebrow">AI Automation Specialist</div>
 
     <h1 class="hero-title">
@@ -750,20 +947,182 @@
       <a href="#contact" class="btn btn-ghost lang-es">Contactarme</a>
       <a href="#contact" class="btn btn-ghost lang-en">Get in touch</a>
     </div>
+    </div>
+
+    <div class="hero-viz" aria-hidden="true">
+      <svg viewBox="-30 0 500 400" class="viz" id="viz" role="presentation" focusable="false">
+        <defs>
+          <linearGradient id="vizGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#1BA1E3"/>
+            <stop offset="35%"  stop-color="#4285F4"/>
+            <stop offset="70%"  stop-color="#9B72CB"/>
+            <stop offset="100%" stop-color="#D96570"/>
+          </linearGradient>
+          <linearGradient id="vizGradV" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#1BA1E3"/>
+            <stop offset="100%" stop-color="#9B72CB"/>
+          </linearGradient>
+          <radialGradient id="vizCore">
+            <stop offset="0%"   stop-color="#ffffff"/>
+            <stop offset="55%"  stop-color="#8AB4F8"/>
+            <stop offset="100%" stop-color="#9B72CB"/>
+          </radialGradient>
+          <filter id="vizGlow" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="vizSoft" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="3"/>
+          </filter>
+        </defs>
+
+        <!-- ── depth layer 1: rails ── -->
+        <g class="layer" data-depth="0.4">
+          <g class="viz-rails">
+            <path id="r1" d="M 62 200 C 105 200, 105 70, 148 70"   pathLength="100"/>
+            <path id="r2" d="M 62 200 L 148 200"                    pathLength="100"/>
+            <path id="r3" d="M 62 200 C 105 200, 105 330, 148 330"  pathLength="100"/>
+            <path id="r4" d="M 202 70  C 240 70, 240 185, 268 185"  pathLength="100"/>
+            <path id="r5" d="M 202 200 L 268 200"                   pathLength="100"/>
+            <path id="r6" d="M 202 330 C 240 330, 240 215, 268 215" pathLength="100"/>
+            <path id="r7" d="M 328 200 C 362 200, 362 120, 396 120" pathLength="100"/>
+            <path id="r8" d="M 328 200 C 362 200, 362 285, 396 285" pathLength="100"/>
+          </g>
+          <g class="viz-flow">
+            <use class="f s1" href="#r1"/><use class="f s1" href="#r2"/><use class="f s1" href="#r3"/>
+            <use class="f s2" href="#r4"/><use class="f s2" href="#r5"/><use class="f s2" href="#r6"/>
+            <use class="f s3" href="#r7"/><use class="f s3" href="#r8"/>
+          </g>
+        </g>
+
+        <!-- ── depth layer 2: nodes ── -->
+        <g class="layer" data-depth="1">
+
+          <!-- intake queue -->
+          <g class="viz-queue">
+            <rect x="-26" y="194" width="11" height="11" rx="3" class="q q1"/>
+            <rect x="-26" y="194" width="11" height="11" rx="3" class="q q2"/>
+            <rect x="-26" y="194" width="11" height="11" rx="3" class="q q3"/>
+          </g>
+
+          <!-- trigger -->
+          <g class="viz-node n0">
+            <circle class="ripple" cx="40" cy="200" r="15"/>
+            <circle class="ripple r2" cx="40" cy="200" r="15"/>
+            <circle class="halo" cx="40" cy="200" r="20"/>
+            <circle class="body" cx="40" cy="200" r="15"/>
+            <circle class="core" cx="40" cy="200" r="5.5"/>
+          </g>
+
+          <!-- stage 1 · waveform -->
+          <g class="viz-node n1">
+            <rect class="halo" x="150" y="44" width="52" height="52" rx="14"/>
+            <rect class="body" x="150" y="44" width="52" height="52" rx="14"/>
+            <g class="glyph bars">
+              <rect x="163" y="62" width="3.5" height="16" rx="1.75"/>
+              <rect x="171" y="62" width="3.5" height="16" rx="1.75"/>
+              <rect x="179" y="62" width="3.5" height="16" rx="1.75"/>
+              <rect x="187" y="62" width="3.5" height="16" rx="1.75"/>
+            </g>
+          </g>
+
+          <!-- stage 1 · matrix -->
+          <g class="viz-node n1 d1">
+            <rect class="halo" x="150" y="174" width="52" height="52" rx="14"/>
+            <rect class="body" x="150" y="174" width="52" height="52" rx="14"/>
+            <g class="glyph dots">
+              <circle cx="167" cy="191" r="2.4"/><circle cx="176" cy="191" r="2.4"/><circle cx="185" cy="191" r="2.4"/>
+              <circle cx="167" cy="200" r="2.4"/><circle cx="176" cy="200" r="2.4"/><circle cx="185" cy="200" r="2.4"/>
+              <circle cx="167" cy="209" r="2.4"/><circle cx="176" cy="209" r="2.4"/><circle cx="185" cy="209" r="2.4"/>
+            </g>
+          </g>
+
+          <!-- stage 1 · lines -->
+          <g class="viz-node n1 d2">
+            <rect class="halo" x="150" y="304" width="52" height="52" rx="14"/>
+            <rect class="body" x="150" y="304" width="52" height="52" rx="14"/>
+            <g class="glyph lines">
+              <rect x="164" y="318" width="24" height="3" rx="1.5"/>
+              <rect x="164" y="326" width="24" height="3" rx="1.5"/>
+              <rect x="164" y="334" width="24" height="3" rx="1.5"/>
+            </g>
+          </g>
+
+          <!-- hub -->
+          <g class="viz-node n2">
+            <circle class="ring" cx="298" cy="200" r="44"/>
+            <circle class="ring inner" cx="298" cy="200" r="34"/>
+            <g class="orbit"><circle class="orb" cx="298" cy="156" r="3.2"/></g>
+            <rect class="halo" x="268" y="170" width="60" height="60" rx="18"/>
+            <rect class="body" x="268" y="170" width="60" height="60" rx="18"/>
+            <g class="hub-core">
+              <circle class="core" cx="298" cy="200" r="9"/>
+              <circle class="core-ring" cx="298" cy="200" r="15"/>
+            </g>
+          </g>
+
+          <!-- outputs -->
+          <g class="viz-node n3">
+            <rect class="halo" x="396" y="94" width="46" height="46" rx="13"/>
+            <rect class="body" x="396" y="94" width="46" height="46" rx="13"/>
+            <g class="glyph fill">
+              <rect class="track" x="408" y="110" width="22" height="3.4" rx="1.7"/>
+              <rect class="bar"   x="408" y="110" width="22" height="3.4" rx="1.7"/>
+              <rect class="track" x="408" y="120" width="22" height="3.4" rx="1.7"/>
+              <rect class="bar b2" x="408" y="120" width="22" height="3.4" rx="1.7"/>
+            </g>
+          </g>
+          <g class="viz-node n3 d1">
+            <rect class="halo" x="396" y="259" width="46" height="46" rx="13"/>
+            <rect class="body" x="396" y="259" width="46" height="46" rx="13"/>
+            <path class="glyph tick" d="M 408 282 L 416 290 L 431 274" pathLength="100"/>
+          </g>
+        </g>
+
+        <!-- ── depth layer 3: packets ── -->
+        <g class="layer viz-packets" data-depth="1.6">
+          <circle class="pkt s1" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.02;0.30;1"><mpath href="#r1"/></animateMotion></circle>
+          <circle class="pkt s1" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.02;0.30;1"><mpath href="#r2"/></animateMotion></circle>
+          <circle class="pkt s1" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.02;0.30;1"><mpath href="#r3"/></animateMotion></circle>
+          <circle class="pkt s2" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.35;0.63;1"><mpath href="#r4"/></animateMotion></circle>
+          <circle class="pkt s2" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.35;0.63;1"><mpath href="#r5"/></animateMotion></circle>
+          <circle class="pkt s2" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.35;0.63;1"><mpath href="#r6"/></animateMotion></circle>
+          <circle class="pkt s3" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.68;0.96;1"><mpath href="#r7"/></animateMotion></circle>
+          <circle class="pkt s3" r="4"><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.68;0.96;1"><mpath href="#r8"/></animateMotion></circle>
+        </g>
+      </svg>
+    </div>
 
     <div class="hero-stats">
       <div class="stat">
+        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.6"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.6"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.6"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.6"/>
+        </svg>
         <span class="stat-num">6</span>
         <span class="stat-label lang-es">Proyectos</span>
         <span class="stat-label lang-en">Projects</span>
       </div>
       <div class="stat">
+        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="6" r="2.6"/>
+          <circle cx="5" cy="18" r="2.6"/>
+          <circle cx="19" cy="18" r="2.6"/>
+          <path d="M12 8.6 L6.2 15.6 M12 8.6 L17.8 15.6" stroke-linecap="round"/>
+        </svg>
         <span class="stat-num stat-num-word lang-es">Multi-agente</span>
         <span class="stat-num stat-num-word lang-en">Multi-agent</span>
         <span class="stat-label lang-es">Automatización de flujos</span>
         <span class="stat-label lang-en">Workflow automation</span>
       </div>
       <div class="stat">
+        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12c3-6 15-6 18 0" stroke-linecap="round"/>
+          <path d="M3 12c3 6 15 6 18 0" stroke-linecap="round"/>
+          <path d="M12 3v18" stroke-linecap="round"/>
+        </svg>
         <span class="stat-num">EN↔ES</span>
         <span class="stat-label lang-es">Especialización</span>
         <span class="stat-label lang-en">Specialization</span>
@@ -1359,6 +1718,29 @@
   }
   document.getElementById('email-btn-es').addEventListener('click', contactMe);
   document.getElementById('email-btn-en').addEventListener('click', contactMe);
+
+  // ─── HERO WORKFLOW: PARALLAX + REDUCED MOTION ───
+  (function () {
+    const svg = document.getElementById('viz');
+    if (!svg) return;
+    if (noMotion) { try { svg.pauseAnimations(); } catch (e) {} return; }
+    const layers = svg.querySelectorAll('.layer');
+    const host = document.querySelector('.hero');
+    host.addEventListener('mousemove', e => {
+      const r = host.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      svg.style.transform = 'rotateY(' + (nx * 9).toFixed(2) + 'deg) rotateX(' + (-ny * 9).toFixed(2) + 'deg)';
+      layers.forEach(l => {
+        const d = parseFloat(l.dataset.depth || 1);
+        l.style.transform = 'translate(' + (nx * 14 * d).toFixed(1) + 'px,' + (ny * 12 * d).toFixed(1) + 'px)';
+      });
+    });
+    host.addEventListener('mouseleave', () => {
+      svg.style.transform = '';
+      layers.forEach(l => { l.style.transform = ''; });
+    });
+  })();
 
   // ─── SCROLL REVEAL ───
   const reduce = noMotion;

@@ -1161,6 +1161,28 @@
     </div>
 
     <div class="projects-grid">
+      <article class="card reveal" role="button" tabindex="0" data-category="automatizacion" data-project="talonario">
+        <div class="card-top">
+          <div class="card-icon">📄</div>
+          <span class="card-status">
+            <span class="lang-es">App privada</span><span class="lang-en">Private app</span>
+          </span>
+        </div>
+        <h3 class="card-title">Talonario</h3>
+        <p class="card-desc lang-es">App privada para liquidar sueldos en Argentina. Fichas de empleador y empleado que se reutilizan cada mes, vista previa en vivo del recibo y PDF sobre la plantilla real. Dos personas comparten el mismo libro.</p>
+        <p class="card-desc lang-en">Private app for Argentine payroll slips. Employer and employee profiles carry over each month — only the period and changed amounts need updating. Live receipt preview and PDF output on the real template. Two people share the same book.</p>
+        <div class="card-tags">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">PDF</span>
+          <span class="tag">Argentina</span>
+        </div>
+        <div class="card-cue">
+          <span class="lang-es">Ver detalle</span><span class="lang-en">View details</span>
+          <span class="arrow">→</span>
+        </div>
+      </article>
+
 
       <article class="card reveal" role="button" tabindex="0" data-category="ia" data-project="whisper">
         <div class="card-top">
@@ -1437,6 +1459,25 @@
 <script>
   // ─── PROJECT DATA ───
   const projects = {
+    talonario: {
+      icon: '📄',
+      title: { es: 'Talonario', en: 'Talonario' },
+      tagline: { es: 'Liquidación de sueldos con recibos en la plantilla real', en: 'Payroll slips generated on the real receipt template' },
+      video: null,
+      screenshots: ['img/talonario-1.png', 'img/talonario-2.png'],
+      desc: {
+        es: 'App privada para <strong>liquidar sueldos en Argentina</strong>. El empleador y cada empleado quedan guardados: al mes siguiente solo se cambia el período y el importe que se movió.<br><br>Un recibo de muestra marca, en vivo, dónde sale cada dato al pasar el mouse. Se imprime uno o varios sobre la <strong>misma plantilla del recibo</strong>, y dos personas comparten el mismo libro con clave.',
+        en: 'Private app for <strong>Argentine payroll</strong>. Employer and employee profiles are saved, so next month you only change the period and the amount that moved.<br><br>A sample receipt highlights, live, where each field lands as you hover. Print one or several on the <strong>same receipt template</strong>, and two people share the same book behind a key.'
+      },
+      metrics: [
+        { val: '1 clic', label: 'Imprimir uno o todos' },
+        { val: '0', label: 'Retipeo mensual' },
+        { val: '2', label: 'Personas, mismo libro' }
+      ],
+      tags: ['React', 'TypeScript', 'PDF', 'Argentina'],
+      links: { es: [{ label: 'App privada', url: null, primary: false }], en: [{ label: 'Private app', url: null, primary: false }] }
+    },
+
     whisper: {
       icon: '🎙️',
       title: { es: 'Parallax Subtitler', en: 'Parallax Subtitler' },
